@@ -24,6 +24,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -224,8 +225,12 @@
     </Compile>
     <Compile Include="JsonUtils.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Debt.cs" />
+    <Compile Include="Models\DebtType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Template.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="PaidDebts.cs">
       <DependentUpon>DebtTrackerEntities.tt</DependentUpon>
     </Compile>
