@@ -1,0 +1,756 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DebtTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Debt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ammount" Type="float" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="DoesRepeat" Type="bit" Nullable="false" />
+          <Property Name="RepeatCount" Type="int" Nullable="false" />
+          <Property Name="UserOwner" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ForUser" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DebtTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="DebtType" Type="int" Nullable="false" />
+          <Property Name="Ammount" Type="float" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" />
+          <Property Name="UserOwner" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="DebtType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DebtTracker.dbo.PaidDebts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PaidDebts">
+          <Key>
+            <PropertyRef Name="DebtId" />
+            <PropertyRef Name="PayDate" />
+          </Key>
+          <Property Name="DebtId" Type="int" Nullable="false" />
+          <Property Name="PayDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Debt_DebtType">
+          <End Role="DebtType" Type="Self.DebtType" Multiplicity="1" />
+          <End Role="Debt" Type="Self.Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DebtType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Debt_ForUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Debt" Type="Self.Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="ForUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Debt_UserOwner">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Debt" Type="Self.Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="UserOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebtTemplate_DebtType">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DebtTemplate" Type="Self.DebtTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DebtTemplate">
+              <PropertyRef Name="UserOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaidDebts_Debt">
+          <End Role="Debt" Type="Self.Debt" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PaidDebts" Type="Self.PaidDebts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaidDebts">
+              <PropertyRef Name="DebtId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="getPaidDebts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="DateTo" Type="datetime" Mode="In" />
+          <Parameter Name="ForUser" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getUnpaidDebts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ForUser" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="payUnpaid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Owner" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DebtTrackerModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Debt" EntityType="Self.Debt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DebtTemplate" EntityType="Self.DebtTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DebtType" EntityType="Self.DebtType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaidDebts" EntityType="Self.PaidDebts" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PaidDebts].[DebtId] AS [DebtId], 
+    [PaidDebts].[PayDate] AS [PayDate]
+    FROM [dbo].[PaidDebts] AS [PaidDebts]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Debt_DebtType" Association="Self.FK_Debt_DebtType">
+            <End Role="DebtType" EntitySet="DebtType" />
+            <End Role="Debt" EntitySet="Debt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Debt_ForUser" Association="Self.FK_Debt_ForUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Debt" EntitySet="Debt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Debt_UserOwner" Association="Self.FK_Debt_UserOwner">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Debt" EntitySet="Debt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebtTemplate_DebtType" Association="Self.FK_DebtTemplate_DebtType">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DebtTemplate" EntitySet="DebtTemplate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaidDebts_Debt" Association="Self.FK_PaidDebts_Debt">
+            <End Role="Debt" EntitySet="Debt" />
+            <End Role="PaidDebts" EntitySet="PaidDebts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DebtTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Debt" Relationship="Self.FK_Debt_ForUser" FromRole="AspNetUsers" ToRole="Debt" />
+          <NavigationProperty Name="Debt1" Relationship="Self.FK_Debt_UserOwner" FromRole="AspNetUsers" ToRole="Debt" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="DebtTemplate" Relationship="DebtTrackerModel.FK_DebtTemplate_DebtType1" FromRole="AspNetUsers" ToRole="DebtTemplate" />
+        </EntityType>
+        <EntityType Name="Debt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Ammount" Type="Double" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="DoesRepeat" Type="Boolean" Nullable="false" />
+          <Property Name="RepeatCount" Type="Int32" Nullable="false" />
+          <Property Name="UserOwner" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ForUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Debt_ForUser" FromRole="Debt" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_Debt_UserOwner" FromRole="Debt" ToRole="AspNetUsers" />
+          <NavigationProperty Name="DebtType" Relationship="Self.FK_Debt_DebtType" FromRole="Debt" ToRole="DebtType" />
+          <NavigationProperty Name="PaidDebts" Relationship="Self.FK_PaidDebts_Debt" FromRole="Debt" ToRole="PaidDebts" />
+        </EntityType>
+        <EntityType Name="DebtTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DebtType" Type="Int32" Nullable="false" />
+          <Property Name="Ammount" Type="Double" Nullable="false" />
+          <NavigationProperty Name="DebtType1" Relationship="Self.FK_DebtTemplate_DebtType" FromRole="DebtTemplate" ToRole="DebtType" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="UserOwner" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="DebtTrackerModel.FK_DebtTemplate_DebtType1" FromRole="DebtTemplate" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="DebtType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Debt" Relationship="Self.FK_Debt_DebtType" FromRole="DebtType" ToRole="Debt" />
+          <NavigationProperty Name="DebtTemplate" Relationship="Self.FK_DebtTemplate_DebtType" FromRole="DebtType" ToRole="DebtTemplate" />
+        </EntityType>
+        <EntityType Name="PaidDebts">
+          <Key>
+            <PropertyRef Name="DebtId" />
+            <PropertyRef Name="PayDate" />
+          </Key>
+          <Property Name="DebtId" Type="Int32" Nullable="false" />
+          <Property Name="PayDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Debt" Relationship="Self.FK_PaidDebts_Debt" FromRole="PaidDebts" ToRole="Debt" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Debt_ForUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Debt" Type="Self.Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="ForUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Debt_UserOwner">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Debt" Type="Self.Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="UserOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Debt_DebtType">
+          <End Role="DebtType" Type="Self.DebtType" Multiplicity="1" />
+          <End Role="Debt" Type="Self.Debt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DebtType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Debt">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaidDebts_Debt">
+          <End Role="Debt" Type="Self.Debt" Multiplicity="1" />
+          <End Role="PaidDebts" Type="Self.PaidDebts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaidDebts">
+              <PropertyRef Name="DebtId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebtTemplate_DebtType">
+          <End Role="DebtType" Type="Self.DebtType" Multiplicity="1" />
+          <End Role="DebtTemplate" Type="Self.DebtTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DebtType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DebtTemplate">
+              <PropertyRef Name="DebtType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DebtTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="Debt" EntityType="Self.Debt" />
+          <EntitySet Name="DebtTemplate" EntityType="Self.DebtTemplate" />
+          <EntitySet Name="DebtType" EntityType="Self.DebtType" />
+          <EntitySet Name="PaidDebts" EntityType="Self.PaidDebts" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Debt_ForUser" Association="Self.FK_Debt_ForUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Debt" EntitySet="Debt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Debt_UserOwner" Association="Self.FK_Debt_UserOwner">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Debt" EntitySet="Debt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Debt_DebtType" Association="Self.FK_Debt_DebtType">
+            <End Role="DebtType" EntitySet="DebtType" />
+            <End Role="Debt" EntitySet="Debt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaidDebts_Debt" Association="Self.FK_PaidDebts_Debt">
+            <End Role="Debt" EntitySet="Debt" />
+            <End Role="PaidDebts" EntitySet="PaidDebts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebtTemplate_DebtType" Association="Self.FK_DebtTemplate_DebtType">
+            <End Role="DebtType" EntitySet="DebtType" />
+            <End Role="DebtTemplate" EntitySet="DebtTemplate" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <FunctionImport Name="getPaidDebts" ReturnType="Collection(DebtTrackerModel.getPaidDebts_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+            <Parameter Name="ForUser" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getUnpaidDebts" ReturnType="Collection(DebtTrackerModel.getUnpaidDebts_Result)">
+          <Parameter Name="ForUser" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="payUnpaid">
+          <Parameter Name="Owner" Mode="In" Type="String" />
+          </FunctionImport>
+          <AssociationSet Name="FK_DebtTemplate_DebtType1" Association="DebtTrackerModel.FK_DebtTemplate_DebtType1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DebtTemplate" EntitySet="DebtTemplate" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="getPaidDebts_Result">
+          <Property Type="Int32" Name="DebtId" Nullable="false" />
+          <Property Type="String" Name="debtName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="payDate" Nullable="false" />
+          <Property Type="Double" Name="Ammount" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="debtType" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="getUnpaidDebts_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="Ammount" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Int32" Name="TypeId" Nullable="false" />
+          <Property Type="Boolean" Name="DoesRepeat" Nullable="false" />
+          <Property Type="Int32" Name="RepeatCount" Nullable="false" />
+          <Property Type="String" Name="UserOwner" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="ForUser" Nullable="false" MaxLength="128" />
+        </ComplexType>
+        <Association Name="FK_DebtTemplate_DebtType1">
+          <End Type="DebtTrackerModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DebtTrackerModel.DebtTemplate" Role="DebtTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DebtTemplate">
+              <PropertyRef Name="UserOwner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DebtTrackerModelStoreContainer" CdmEntityContainer="DebtTrackerEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="DebtTrackerModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="DebtTrackerModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="DebtTrackerModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="DebtTrackerModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="DebtTrackerModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Debt">
+            <EntityTypeMapping TypeName="DebtTrackerModel.Debt">
+              <MappingFragment StoreEntitySet="Debt">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="DoesRepeat" ColumnName="DoesRepeat" />
+                <ScalarProperty Name="RepeatCount" ColumnName="RepeatCount" />
+                <ScalarProperty Name="UserOwner" ColumnName="UserOwner" />
+                <ScalarProperty Name="ForUser" ColumnName="ForUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DebtTemplate">
+            <EntityTypeMapping TypeName="DebtTrackerModel.DebtTemplate">
+              <MappingFragment StoreEntitySet="DebtTemplate">
+                <ScalarProperty Name="UserOwner" ColumnName="UserOwner" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DebtType" ColumnName="DebtType" />
+                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DebtType">
+            <EntityTypeMapping TypeName="DebtTrackerModel.DebtType">
+              <MappingFragment StoreEntitySet="DebtType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaidDebts">
+            <EntityTypeMapping TypeName="DebtTrackerModel.PaidDebts">
+              <MappingFragment StoreEntitySet="PaidDebts">
+                <ScalarProperty Name="DebtId" ColumnName="DebtId" />
+                <ScalarProperty Name="PayDate" ColumnName="PayDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DebtTrackerModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="getPaidDebts" FunctionName="DebtTrackerModel.Store.getPaidDebts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DebtTrackerModel.getPaidDebts_Result">
+                <ScalarProperty Name="DebtId" ColumnName="DebtId" />
+                <ScalarProperty Name="debtName" ColumnName="debtName" />
+                <ScalarProperty Name="payDate" ColumnName="payDate" />
+                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="debtType" ColumnName="debtType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getUnpaidDebts" FunctionName="DebtTrackerModel.Store.getUnpaidDebts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DebtTrackerModel.getUnpaidDebts_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Ammount" ColumnName="Ammount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="DoesRepeat" ColumnName="DoesRepeat" />
+                <ScalarProperty Name="RepeatCount" ColumnName="RepeatCount" />
+                <ScalarProperty Name="UserOwner" ColumnName="UserOwner" />
+                <ScalarProperty Name="ForUser" ColumnName="ForUser" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="payUnpaid" FunctionName="DebtTrackerModel.Store.payUnpaid" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

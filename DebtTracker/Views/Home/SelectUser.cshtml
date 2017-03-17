@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Odaberi korisnika";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/SelectUser")
+
+<h4>Odaberi korisnika za troškove</h4>
+<div class="k-loading-image"></div>
+
+
+<a href="#" id="forDanijel" class="btn teal  darken-4 btn-large waves-effect btn-selectUser">Danijel</a>
+<a href="#" id="forMario" class="btn teal  darken-2 btn-large waves-effect btn-selectUser">Mario</a>
+
+@section scripts {
+	@Scripts.Render("~/bundles/SelectUser")
+}

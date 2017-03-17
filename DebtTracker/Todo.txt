@@ -1,0 +1,6 @@
+﻿- podmiri -> učitaj paid history za ovaj mjesec plus sve što je bilo učitano ali tako da je ovaj mjesec na vrhu
+
+- dodati nekakvu graf statistiku za sve podmirene troškove (trošak grupiran po tipu, pojedinačne režije itd.)
+
+- dodaj trim za description i typeName na gridovima kako bi se moglo filtrirati
+

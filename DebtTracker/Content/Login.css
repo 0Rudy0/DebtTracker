@@ -1,0 +1,40 @@
+﻿@media screen {
+
+	.text-danger {
+		color: red;
+	}
+
+	#loginForm .form-group {
+		padding-top: 50px;
+	}
+
+	.loginButtonHolder {
+		padding-top: 20px;
+	}
+
+		.loginButtonHolder .btn-login {
+			width: 50%;
+			height: 80px;
+		}
+
+	#toolbar span.k-sprite.register {
+		width: 0px !important;
+		height: 0px !important;
+		background-repeat: no-repeat;
+		background-size: 30px;
+		background-position: 50% 50%;
+	}
+}
+
+
+@media only screen and (min-width: 321px) and (max-width: 767px) {
+	.loginButtonHolder .btn-login {
+		width: 100%;
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+	.loginButtonHolder .btn-login {
+		width: 100%;
+	}
+}

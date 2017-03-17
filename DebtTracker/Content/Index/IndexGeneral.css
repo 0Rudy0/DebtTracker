@@ -1,0 +1,75 @@
+﻿@media screen {
+
+	.card {
+		overflow: visible;
+	}
+
+	#noAuthContent {
+		text-align: center;
+		padding-top: 100px;
+	}
+
+		#noAuthContent #loginButton,
+		#noAuthContent #regButton {
+			font-size: 2em;
+			width: 300px;
+			height: 100px;
+			line-height: 100px;
+			vertical-align: middle;
+		}
+
+        #newTemplate
+	#templateModal .modal-content a#newTemplate {
+        line-height: 50px;
+        height: 50px;
+        background-color: #546e7a  !important;
+        color: white;
+        width: 50%;
+        /*padding: 0 !important;*/
+        /*float: left;*/
+        /*color: transparent;*/
+	}#templateModal .modal-content a#newTemplate:hover {
+         text-decoration:none;
+        background-color: #638392  !important;
+	}
+    #templateModal .material-icons {
+        line-height: 60px;
+        position: relative;
+        top: -10px;
+    }
+
+    #templateName {
+        line-height: 40px;
+        text-indent: 10px;
+        background-color: #546f77;
+        border: 1px solid #3b4c54;
+        color: white;
+        margin-left: 30px;
+        width: calc(100% - 195px);
+        position: absolute;
+        right: 4px;
+        top: 8px;
+        /*float: left;*/
+    }
+    #templateName:focus {
+        /*background-color: transparent;*/
+        border: 1px solid white !important;
+    }
+
+    .btn-deleteTemplate {
+        float: right;
+        position: relative;
+        top: -50px;
+		right: 5px;
+    }
+
+    #templateModal .collection-item {
+        height: 60px;
+        line-height: 40px;
+    }
+
+    #newTemplate span {
+        line-height: 40px;
+    }
+}
+

@@ -1,0 +1,36 @@
+﻿@media screen {
+
+	.body-content.container {
+		padding-top: 0px;
+	}
+
+	h4, p {
+		text-align: center;
+	}
+	p {
+		padding-top: 200px;
+		font-size: 2em;
+		font-style: italic;
+		color: red;
+	}
+}
+
+@media only screen and (min-width: 0px) and (max-width: 460px) {
+	h4 {
+		font-size: 1.2em;
+	}
+}
+
+@media only screen and (min-width: 461px) and (max-width: 550px) {
+	h4 {
+		font-size: 1.4em;
+	}
+}
+
+@media only screen and (min-width: 551px) and (max-width: 767px) {
+	h4 {
+		font-size: 1.8em;
+	}
+}
+
+

@@ -1,0 +1,88 @@
+﻿@media screen {
+
+	/*#region History */
+		
+	#historyHolder {
+		/*display: none;*/
+        position: relative;
+        /*height: 200px;*/
+		-moz-transition: box-shadow 0.2s;
+		-o-transition: box-shadow 0.2s;
+		-webkit-transition: box-shadow 0.2s;
+		transition: box-shadow 0.2s;
+		margin-bottom: 50px;
+		margin-top: 80px;
+	}
+
+	#historyHolder .k-loading-image {
+		display: none;
+	}
+
+    #historyModalsContainer .k-grid {
+        border: 0;
+    }
+
+	.btn-showHistoryDetails {
+		float: right;
+		top: -60px;
+		display: block;
+		color: white !important;
+	}
+	.btn-showHistoryDetails:hover {
+		color: black !important;
+
+	}
+
+	.btn-showHistoryDetailsAlt {
+		/*float: right;*/
+		/*top: -60px;*/
+		width: 100%;
+		display: none;
+		color: black !important;
+	}
+	.btn-showHistoryDetailsAlt:hover {
+		color: white !important;
+	}
+
+    .k-loading-image {
+        /*background-color: rgba(255, 255, 255, 0.2) !important;*/
+    }
+
+    #historyModal .modal-content {
+        padding: 5px;
+    }
+
+	.historyItem {
+		/*left: -200%;*/
+		/*position: relative;*/
+		opacity: 0;
+	}
+
+    .btn-debtHistory {
+        /*margin-bottom: 100px;*/
+        width: 100%;
+        /*margin-top: 50px;*/
+    }
+
+	/*#endregion */
+}
+
+@media only screen and (min-width: 0px) and (max-width: 440px) {
+	.btn-showHistoryDetails {
+		display: none;
+	}
+	.btn-showHistoryDetailsAlt {
+		display: block;
+	}
+}
+
+@media only screen and (min-width: 441px) and (max-width: 549px) {
+	.btn-showHistoryDetails {
+		display: none;
+	}
+
+	.btn-showHistoryDetailsAlt {
+		display: block;
+	}
+}
+

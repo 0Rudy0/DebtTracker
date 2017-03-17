@@ -1,0 +1,51 @@
+﻿@media screen {
+
+	.body-content.container {
+		padding-top: 0px;
+	}
+
+	h4 {
+		text-align: center;
+	}
+	.k-grid tr.k-alt td[role="gridcell"]{
+		/*background-color: #dde4e7;*/
+		color: black;
+	}
+		
+	.k-grid .k-grouping-header .k-group-indicator {
+		background-color: #36454d !important;
+		border-color: #546f77;
+	}
+}
+
+@media only screen and (min-width: 0px) and (max-width: 460px) {
+	h4 {
+		font-size: 1.2em;
+	}
+	.k-grid {
+		font-size: 0.6em;
+		min-width: 0;
+	}
+}
+
+@media only screen and (min-width: 461px) and (max-width: 550px) {
+	h4 {
+		font-size: 1.4em;
+	}
+	.k-grid {
+		font-size: 0.7em;
+		min-width: 0;
+	}
+}
+
+@media only screen and (min-width: 551px) and (max-width: 767px) {
+	h4 {
+		font-size: 1.8em;
+	}
+	.k-grid {
+		font-size: 0.9em;
+		min-width: 0;
+	}
+}
+
+

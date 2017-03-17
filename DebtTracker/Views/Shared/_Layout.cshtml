@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	@*<meta name="viewport" content="width=device-width">*@
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, , maximum-scale=1.0, user-scalable=no">
+	@*<meta name="viewport" content="width=device-width, initial-scale=0.75, , maximum-scale=0.75, user-scalable=no">*@
+	<link rel="SHORTCUT ICON" href="~/favicon.ico" />
+	<title>Pratitelj dugova</title>
+	@Styles.Render("~/Content/Layout")
+	@Scripts.Render("~/bundles/Layout")
+	@*@Scripts.Render("~/bundles/modernizr")*@
+	@{
+		string title = "Pratitelj dugova";
+		string isSpecial = "false";
+		if (Session["forUserName"] != null)
+		{
+			title += " (" + Session["forUserName"].ToString() + ")";
+		}
+		if (Session["isSpecial"] != null)
+		{
+			isSpecial = Session["isSpecial"].ToString();
+		}
+	}
+
+    <meta name="description" content="Tracks the debts" />
+</head>
+<body>
+	<nav>
+		<div class="nav-wrapper blue-grey darken-1 white-text">
+			<div id="pageLogoIcon"></div>
+			@Html.ActionLink(title, "Index", "Home", new { }, new { @class = "white-text", id = "pageLogo" })
+			@*<a href="Home" class=" white-text" id="pageLogo">Pratitelj Dugova</a>*@
+			@if (Request.IsAuthenticated)
+			{
+				using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+				{
+					@Html.AntiForgeryToken()
+
+					<div id="toolbar"></div>
+				}
+			}
+			else
+			{
+				<div id="toolbar"></div>
+			}
+		</div>
+	</nav>
+	<div class="container body-content">
+		@RenderBody()
+	</div>
+	@RenderSection("scripts", required: false)
+	<script type="text/javascript">
+		var isAuthenticated = @Request.IsAuthenticated.ToString().ToLower();
+		//var isAuthenticated = false;
+		var userName = '@User.Identity.GetUserName()';
+		var userId = '@User.Identity.GetUserId()';
+		//var forUser = '066d5a34-ccb8-46db-ab4d-ce716272a65e';
+		var forUser = '@Session["forUser"]';
+		console.log(userId);
+		var decimalSeparator = ',';
+		var thousandSeparator = '.';
+		//var appName = 'http://localhost/debttracker/';
+		var appName = '@System.Configuration.ConfigurationManager.AppSettings.Get("appName")';
+		//if (appName == undefined) {
+		//	appName = document.URL;
+		//	localStorage["home"] = appName;
+		//};
+		var isSpecial = @isSpecial.ToLower();
+
+		kendo.culture('hr-HR');
+	</script>
+</body>
+
+</html>

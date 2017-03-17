@@ -1,0 +1,201 @@
+﻿@media screen {
+	/*#region Modals */
+
+	#historyModalsContainer div.modal {
+		top: 0 !important;
+	}
+
+	input.ammount[disabled="disabled"] {
+		color: black;
+		cursor: not-allowed;
+	}
+
+	.k-window .k-window-titlebar {
+		border: 0;
+	}
+
+	.k-window .k-window-content {
+		/*background-image: url(../Content/Backgrounds/notebook.png);*/
+		top: -1px;
+		height: calc(100% + 1px);
+	}
+
+	#editDebtModal {
+		padding: 40px 0 0 0;
+		overflow: visible;
+	}
+
+	#acceptModal {
+		height: 173px;
+	}
+
+		#acceptModal .modal-content {
+			border: 0;
+			box-shadow: none;
+			border-radius: 0;
+		}
+
+		#acceptModal .modal-footer {
+			margin-top: 0;
+			border: 0;
+			height: auto;
+		}
+
+		#acceptModal .btn {
+			margin-left: 40px;
+		}
+
+	#endDateModal {
+		height: 470px;
+		min-width: 300px;
+		text-align: center;
+		overflow: hidden;
+	}
+
+		#endDateModal .modal-footer {
+			width: calc(100% - 40px);
+			position: absolute;
+			bottom: -0px;
+		}
+
+	.btn-acceptDateModal {
+		float: right;
+	}
+
+	.btn-noEndDateModal {
+		float: left !important;
+	}
+
+	.btn-saveChanges, .btn-deleteDebt {
+		width: 236px;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.btn-saveChanges {
+		float: right;
+		margin-right: 10px;
+	}
+
+	.btn-deleteDebt {
+		float: right;
+		margin-right: 20px;
+		/*margin*/
+	}
+
+	.bnt-repeatCountMinus,
+	.bnt-repeatCountPlus {
+		font-size: 2em;
+	}
+
+	.repeatCount {
+		text-align: center;
+		width: 65px;
+		font-size: 1.4em;
+		margin: 0 20px 0 20px;
+	}
+
+	input.repeatCount.k-formatted-value {
+		text-indent: 0 !important;
+	}
+
+	input#repeatCount.repeatCount {
+		text-indent: 0 !important;
+		/*display: block;*/
+	}
+
+	#selectRepeatCountModal {
+		width: 330px;
+		height: 330px;
+		padding: 20px;
+	}
+
+		#selectRepeatCountModal .row:nth-child(2),
+		#selectRepeatCountModal .row:nth-child(3) {
+			text-align: center;
+			margin-top: 50px;
+		}
+
+		#selectRepeatCountModal .bnt-repeatNoEnd {
+			width: 100%;
+		}
+
+	span.repeatCount {
+		width: 80px;
+		/*margin-left: 87px;*/
+	}
+
+	a.bnt-repeatCountMinus,
+	a.bnt-repeatCountPlus {
+		padding: 0;
+		width: 60px;
+	}
+
+	a.bnt-repeatCountMinus,
+	a.bnt-cancelRepeat {
+		float: left;
+	}
+
+	a.bnt-repeatCountPlus,
+	a.bnt-acceptRepeat {
+		float: right;
+	}
+
+
+	/*#endregion */
+}
+
+@media only screen and (min-width: 0px) and (max-width: 440px) {
+
+	#editDebtModal {
+		padding-top: 0;
+	}
+
+	#acceptModal {
+		height: 250px;
+	}
+
+		#acceptModal .modal-content,
+		#acceptModal #confirmText {
+			text-align: center;
+			font-size: 1.4em;
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		#acceptModal .btn-confirmAccept {
+			width: 100%;
+			float: left;
+			margin: 10px 0 20px 0;
+		}
+
+		#acceptModal .btn-cancelAccept {
+			width: 100%;
+			float: left;
+			margin: 0;
+		}
+}
+
+@media only screen and (min-width: 441px) and (max-width: 549px) {
+	#acceptModal {
+		height: 250px;
+	}
+
+		#acceptModal .modal-content {
+			text-align: center;
+		}
+
+		#acceptModal .btn-confirmAccept {
+			width: 100%;
+			float: left;
+			margin: 10px 0 20px 0;
+		}
+
+		#acceptModal .btn-cancelAccept {
+			width: 100%;
+			float: left;
+			margin: 0;
+		}
+}
+

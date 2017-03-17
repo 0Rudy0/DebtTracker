@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Tablica troškova";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/AllPaidDebts")
+
+<h4>Tablica svih plaćenih troškova</h4>
+
+<div id="mainGrid"></div>
+
+@section scripts {
+	@Scripts.Render("~/bundles/AllPaidDebts")
+}
+

@@ -1,0 +1,152 @@
+﻿@media screen {
+	/*#region Kendo grid - unresolved */
+
+    .mainGridLoading {
+        display: none;
+    }
+
+	.k-grid tr td, .k-pivot-layout .k-grid tr td {
+		color: black !important;
+	}
+
+	
+	.k-grid tr.k-alt td[role="gridcell"]{
+		/*background-color: #dde4e7 ;*/
+		color: black;
+		/*background-color: #00796b;*/
+		/*color: white;*/
+	}
+
+	/******* MODAL *******/
+
+	.modal .k-grid td[role="gridcell"] {
+        background-color:  #0097a7;
+		/*color: white;*/
+        background-color:  #efebe9    ;
+		color: black;
+	}
+
+	.modal .k-grid tr.k-alt td[role="gridcell"]{
+		/*background-color: #007f8d;*/
+		/*color: white;*/
+		/*background-color: #e5dddb   ;*/
+		color: black;
+	}
+	.modal .k-grid .k-grouping-header {
+		background-color: #8d6e63   !important;
+	}
+	.modal .k-grid .k-grouping-header .k-group-indicator {
+		background-color: #785c54    !important;
+		border-color: #624a45 ;
+	}
+	.unresolvedDebtsGridHolder  .k-grid .k-grouping-header .k-group-indicator {
+		background-color: #36454d     !important;
+		border-color: #546f77 ;
+	}
+
+
+    .k-grid .k-button {
+            -moz-transition: ease-in 0.2s;
+            -o-transition: ease-in 0.2s;
+            -webkit-transition: ease-in 0.2s;
+            transition: ease-in 0.2s;
+    }
+        .k-grid .k-alt .k-button {
+            /*background-color: #c1c1c1;
+            border-color: #c1c1c1;
+            -moz-transition: ease-in 0.2s;
+            -o-transition: ease-in 0.2s;
+            -webkit-transition: ease-in 0.2s;
+            transition: ease-in 0.2s;*/
+        }
+        .k-grid .k-alt .k-button:hover {
+        /*background-color: #a3a3a3;
+        border-color: #a3a3a3;*/
+    }
+
+	.btn-resolveDebts {
+		float: right;
+	}
+
+	.unresolvedDebtsGridHolder {
+		border: 0;
+		overflow-x: auto;
+	}
+
+	#unresolvedDebtsGrid {
+		min-width: 500px;
+		border: 0;
+	}
+	#unresolvedDebtsGrid .k-group-footer td {
+		line-height: 10px;
+		height: 10px;
+	}
+
+	#unresolvedDebtsGrid .k-group-footer div {
+		font-style: italic;
+		font-size: 12px;
+		text-decoration:underline;
+	}
+
+	#unresolvedDebtsGrid .k-grid-footer div {
+		color: #a40000;
+		font-size: 17px;
+		/*text-decoration:underline;*/
+		/*text-transform:uppercase;*/
+	}
+
+	#historyModalsContainer .modal {
+		/*min-width: 450px;*/
+	}
+
+	#historyModalsContainer .k-grid {
+		min-width: 500px;
+	}
+
+	/*#endregion */
+}
+
+@media only screen and (min-width: 0px) and (max-width: 520px) {
+	
+	.btn-resolveDebts {
+		float: none;
+		width: 100%;
+		/*margin-top: 50px;*/
+	}
+
+	.row .card div.card-content {
+		text-align: center;
+		padding-top: 5px;
+	}
+}
+
+@media only screen and (min-width: 0px) and (max-width: 400px) {
+	#unresolvedDebtsGrid,
+	#historyModalsContainer .k-grid {
+		font-size: 0.6em;
+		min-width: 400px;
+	}
+	#unresolvedDebtsGrid .k-grid-footer div {
+		font-size: 13px;
+	}
+}
+
+@media only screen and (min-width: 401px) and (max-width: 550px) {
+	#unresolvedDebtsGrid,
+	#historyModalsContainer .k-grid {
+		font-size: 0.7em;
+		min-width: 420px;
+	}
+	#unresolvedDebtsGrid .k-grid-footer div {
+		font-size: 13px;
+	}
+}
+
+@media only screen and (min-width: 551px) and (max-width: 767px) {
+	#unresolvedDebtsGrid,
+	#historyModalsContainer .k-grid {
+		font-size: 0.8em;
+		min-width: 0;
+	}
+}
+
