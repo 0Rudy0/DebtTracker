@@ -410,21 +410,21 @@ namespace DebtTracker.Controllers
 		#region SENDING EMAIL
 
 		private string _fromEmailAddress = "debttracker@openmailbox.org";
-		private string _smtpHost = "SMTP.OPENMAILBOX.ORG";
-		private string _credentialsUsername = "debttracker@openmailbox.org";
-		private string _credentialsPassword = "rudx1234";
+		private string _smtpHost = "in-v3.mailjet.com";
+		private string _credentialsUsername = "f21fc2f872cfaee8ba7be04996d6ccad";
+		private string _credentialsPassword = "f75b57060ff58ba3474c70a529635c5e";
 
 		public void SendEmailDebtAdded(Debt newDebt)
 		{
 			System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("hr-HR");
 			var toAddress = entities.AspNetUsers.Where(x => x.Id == newDebt.ForUser).ToList().ElementAt(0).Email;
 			var byUser = entities.AspNetUsers.Where(x => x.Id == newDebt.UserOwner).ToList().ElementAt(0).UserName;
-			var body = string.Format("Unio korisnik: {0}\r\nDatum: {1}\r\nTrosak: {2}, {3} kn\r\n\r\nUkupno dugovanje: {4} kn",
-				byUser,
-				newDebt.Date.ToString("d", ci),
-				newDebt.Description,
-				newDebt.Ammount,
-				entities.getUnpaidDebts(newDebt.ForUser).ToList().Sum(x => x.Ammount));
+            var body = string.Format("Unio korisnik: {0}\r\nDatum: {1}\r\nTrosak: {2}, {3} kn\r\n\r\nUkupno dugovanje: {4} kn",
+                byUser,
+                newDebt.Date.ToString("d", ci),
+                newDebt.Description,
+                newDebt.Ammount.ToString("#.00"),
+				entities.getUnpaidDebts(newDebt.ForUser).ToList().Sum(x => x.Ammount).ToString("#."));
 			var mailMessage = new MailMessage();
 			mailMessage.To.Add(new MailAddress(toAddress));
 			mailMessage.From = new MailAddress(_fromEmailAddress);
@@ -467,14 +467,21 @@ namespace DebtTracker.Controllers
 		{
 			System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("hr-HR");
 			var byUser = entities.AspNetUsers.Where(x => x.Id == forUser).ToList().ElementAt(0).UserName;
-			var body = string.Format("Korisnik {0} je podmirio sve dugove u iznosu od {1} kn",
+			var body = string.Format("{0} je podmirio sve dugove u iznosu od {1} kn.",
 				byUser,
-				entities.getUnpaidDebts(forUser).ToList().Sum(x => x.Ammount));
+				entities.getUnpaidDebts(forUser).Where(d => d.Ammount > 0).ToList().Sum(x => x.Ammount).ToString("#."));
+            if (entities.getUnpaidDebts(forUser).ToList().Sum(x => x.Ammount) < 0)
+            {
+                body = string.Format("{0} je podmirio sve dugove u iznosu od {1} kn. Višak u iznosu od {2} kn je prebačen na sljedeći mjesec.",
+                byUser,
+                entities.getUnpaidDebts(forUser).Where(d => d.Ammount > 0).ToList().Sum(x => x.Ammount).ToString("#."),
+                entities.getUnpaidDebts(forUser).ToList().Sum(x => x.Ammount).ToString("#."));
+            }
 			var mailMessage = new MailMessage();
 			mailMessage.To.Add(new MailAddress("ljerka.rudman@gmail.com"));
 			mailMessage.To.Add(new MailAddress("zrudman7@gmail.com"));
 			mailMessage.From = new MailAddress(_fromEmailAddress);
-			mailMessage.Subject = "Pratitelj dugova - podmireni dugovi (" + byUser + ")";
+			mailMessage.Subject = "Pratitelj dugova - " + byUser.ToUpper() + " je podirio svoje dugove";
 			mailMessage.Body = body;
 			mailMessage.IsBodyHtml = true;
 			//IMPORANT:  Your smtp login email MUST be same as your FROM address.

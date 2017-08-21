@@ -18,7 +18,7 @@
 }
 
 else
-{   
+{
     <div class="row" id="mainDebtForm">
         <div class="col s12 m12">
             <div class="card blue-grey darken-2">
@@ -137,7 +137,7 @@ else
     <div id='typeModal1' class='modal bottom-sheet blue-grey darken-1'>
         <div class="modal-content blue-grey darken-1">
             <div class='collection blue-grey darken-1'>
-                @foreach (DebtTracker.DebtType type in entities.DebtType)
+                @foreach (DebtType type in entities.DebtType)
                 {
                     <a href="#!" class="collection-item white-text modal-close mainDebtType  blue-grey darken-3" data-id="@type.Id">@type.Description</a>
                 }
@@ -146,7 +146,7 @@ else
     </div>
 
     <ul id='typeModal2' class='dropdown-content blue-grey darken-2'>
-        @foreach (DebtTracker.DebtType type in entities.DebtType)
+        @foreach (DebtType type in entities.DebtType)
         {
             <li><a href="#!" class="editDebtType white-text blue-grey darken-3" data-id="@type.Id">@type.Description</a></li>
         }
