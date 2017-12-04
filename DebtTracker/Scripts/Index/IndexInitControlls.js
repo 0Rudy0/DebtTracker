@@ -427,10 +427,10 @@ function initUnpaidGrid(data) {
 			{
 				field: "Ammount",
 				title: "Iznos",
-				width: "120px",
+				width: "150px",
 				aggregates: ["sum"],
-				groupFooterTemplate: "<div align=right>#: kendo.toString(sum, 'n0') # kn</div>",
-				footerTemplate: "<div align=right>#: kendo.toString(sum, 'n0') # kn</div>",
+				groupFooterTemplate: "<div align=right>#: kendo.toString(sum, 'n2') # kn</div>",
+				footerTemplate: "<div align=right>#: kendo.toString(sum, 'n2') # kn</div>",
 				template: "<div align=right>#: kendo.toString(Ammount, 'n2') # kn</div>"
 			},
 			{

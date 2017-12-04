@@ -83,14 +83,17 @@
 	}
 
 	#unresolvedDebtsGrid .k-group-footer div {
-		font-style: italic;
-		font-size: 12px;
-		text-decoration:underline;
+		/*font-style: italic;*/
+		font-size: 14px;
+		/*text-decoration:underline;*/
+        /*font-weight: 100;*/
+        font-family: Consolas;
 	}
 
 	#unresolvedDebtsGrid .k-grid-footer div {
 		color: #a40000;
 		font-size: 17px;
+        /*font-family: Consolas;*/
 		/*text-decoration:underline;*/
 		/*text-transform:uppercase;*/
 	}

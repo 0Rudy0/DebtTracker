@@ -1,6 +1,9 @@
 *.suo
 *.vssscc
-bin\*
-debug\*
+*bin\*
+*/bin*
+
+*debug\*
+*/obj*
 release\*
 *csproj.user*
