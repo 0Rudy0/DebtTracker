@@ -376,7 +376,13 @@ function initUnpaidGrid(data) {
 	//return;
 	$('.unresolvedDebtsGridHolder').html('');
 	$('<div id="unresolvedDebtsGrid"></div>').appendTo('.unresolvedDebtsGridHolder');
-	var grid = $("#unresolvedDebtsGrid").kendoGrid({
+    var grid = $("#unresolvedDebtsGrid").kendoGrid({
+        toolbar: ["excel"],
+        excel: {
+            fileName: "Neplaćeni dugovi na dan " + dateToday + " - " + forUserName + ".xlsx",
+            proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+            filterable: true
+        },
 		dataSource: {
 			data: data,
 			schema: {
@@ -518,7 +524,13 @@ function initHistoryGrid() {
 	//return;
 	if ($(".historyGrid" + data.index).html().trim().length == 0) {
 		$(".card-action" + data.index).css('padding', '0px');
-		$(".historyGrid" + data.index).kendoGrid({
+        $(".historyGrid" + data.index).kendoGrid({
+            toolbar: ["excel"],
+            excel: {
+                fileName: "Neplaćeni dugovi na dan " + dateToday + " - " + forUserName + ".xlsx",
+                proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+                filterable: true
+            },
 			dataSource: {
 				data: data.debts,
 				schema: {
@@ -572,8 +584,15 @@ function initHistoryGrid() {
 
 function initHistoryGridModal(data) {
 	//var data = this;
-	$(".historyGridModal" + data.index).kendoGrid({
-		dataSource: {
+    console.log(data);
+    $(".historyGridModal" + data.index).kendoGrid({
+        toolbar: ["excel"],
+        excel: {
+            fileName: "Svi dugovi plaćeni na dan " + (new Date(data.date)).toLocaleDateString('hr').replace(' ', '').replace(' ', '') + " - " + forUserName + ".xlsx",
+            proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+            filterable: true
+        },
+        dataSource: {
 			data: data.debts,
 			schema: {
 				model: {

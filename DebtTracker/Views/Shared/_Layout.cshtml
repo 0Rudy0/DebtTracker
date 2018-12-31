@@ -12,16 +12,19 @@
 	@Scripts.Render("~/bundles/Layout")
 	@*@Scripts.Render("~/bundles/modernizr")*@
 	@{
-		string title = "Pratitelj dugova";
-		string isSpecial = "false";
-		if (Session["forUserName"] != null)
-		{
-			title += " (" + Session["forUserName"].ToString() + ")";
-		}
-		if (Session["isSpecial"] != null)
-		{
-			isSpecial = Session["isSpecial"].ToString();
-		}
+        string title = "Pratitelj dugova";
+        string isSpecial = "false";
+        var forUser = "";
+
+        if (Session["forUserName"] != null)
+        {
+            title += " (" + Session["forUserName"].ToString() + ")";
+            forUser = Session["forUserName"].ToString();
+        }
+        if (Session["isSpecial"] != null)
+        {
+            isSpecial = Session["isSpecial"].ToString();
+        }
 	}
 
     <meta name="description" content="Tracks the debts" />
@@ -67,7 +70,9 @@
 		//	appName = document.URL;
 		//	localStorage["home"] = appName;
 		//};
-		var isSpecial = @isSpecial.ToLower();
+        var isSpecial = @isSpecial.ToLower();
+        var forUserName = '@forUser';
+        var dateToday = '@DateTime.Now.ToString("dd.MM.yyyy")';   
 
 		kendo.culture('hr-HR');
 	</script>

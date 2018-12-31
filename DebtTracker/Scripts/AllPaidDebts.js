@@ -53,9 +53,15 @@ function initHistoryGrid(data) {
 	//		moment(data.date).format("MM YYYY"))
 	//$('#historyModal').openModal();
 	//return;
-	$("#mainGrid").kendoGrid({
+    $("#mainGrid").kendoGrid({
+        toolbar: ["excel"],
+        excel: {
+            fileName: "Svi plaćeni dugovi na dan " + dateToday + " - " + forUserName + ".xlsx",
+            proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+            filterable: true
+        },
 		dataSource: {
-			data: data,
+            data: data,
 			schema: {
 				model: {
 					fields: {
@@ -74,7 +80,7 @@ function initHistoryGrid(data) {
 			//    ]
 			//},
 			aggregate: [{ field: "Ammount", aggregate: "sum" }]
-		},
+        },
 		height: $(window).height() - 150,
 		scrollable: true,
 		sortable: true,

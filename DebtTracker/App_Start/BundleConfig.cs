@@ -70,8 +70,9 @@ namespace DebtTracker
 				"~/Scripts/Index/IndexGlobalVariables.js",		
 				"~/Scripts/Index/IndexAjaxCalls.js",			
 				"~/Scripts/Index/IndexInitControlls.js",			
-				"~/Scripts/Index/IndexMain.js"
-				));
+				"~/Scripts/Index/IndexMain.js",
+                "~/Scripts/jszip.min.js"
+                ));
 
 			bundles.Add(new ScriptBundle("~/bundles/Login").Include(
 				"~/Scripts/Login.js"
@@ -86,7 +87,8 @@ namespace DebtTracker
 				));
 
 			bundles.Add(new ScriptBundle("~/bundles/AllPaidDebts").Include(
-				"~/Scripts/AllPaidDebts.js"
+                "~/Scripts/jszip.min.js",
+                "~/Scripts/AllPaidDebts.js"
 				));
 
 
