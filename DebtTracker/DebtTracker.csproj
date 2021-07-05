@@ -226,6 +226,7 @@
     </Compile>
     <Compile Include="JsonUtils.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\UploadClasses.cs" />
     <Compile Include="Models\Debt.cs" />
     <Compile Include="Models\DebtType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -237,6 +238,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AllPaidDebts.css" />
@@ -527,6 +529,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\FileUpload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -7,6 +7,9 @@ using DebtTracker.Models;
 using Microsoft.AspNet.Identity;
 using Kendo.Mvc.UI;
 using System.Net.Mail;
+using System.IO;
+using System.Text;
+using System.Runtime.Serialization.Json;
 
 namespace DebtTracker.Controllers
 {
@@ -73,7 +76,110 @@ namespace DebtTracker.Controllers
 
 		#endregion
 
-		
+		#region UPLOAD
+
+		public ActionResult Save(IEnumerable<HttpPostedFileBase> files)
+		{
+			try
+            {
+				var errorMessages = new List<string>();
+				var countSuccess = 0;
+				var debtTypes = entities.DebtType.ToList();
+
+				if (files != null)
+				{
+					foreach (var file in files)
+					{
+						var streamReader = new StreamReader(file.InputStream, System.Text.Encoding.Default);
+						var stream = streamReader.ReadToEnd();
+						var content = HttpUtility.UrlDecode(stream);
+						var result = Utils.ProcessCSV(content, debtTypes, Session["forUser"]?.ToString(), User.Identity.GetUserId());
+
+						foreach (var debt in result.Item1)
+						{
+							entities.Debt.Add(debt);
+						}
+						countSuccess += result.Item1.Count;
+						errorMessages.AddRange(result.Item2);
+					}
+					entities.SaveChanges();
+				}
+
+				// Return an empty string to signify success
+				return Json(new
+				{
+					countSuccess,
+					errorMessages
+				});
+			}
+			catch (Exception ex)
+            {
+				throw;
+
+				return Json(new
+				{
+					countSuccess = 0,
+					errorMessages = new List<string> { ex.Message }
+				});
+			}			
+		}
+
+		public ActionResult UploadCSV(IEnumerable<HttpPostedFileBase> files, string metaData)
+		{
+			if (metaData == null)
+			{
+				return Save(files);
+			}
+
+			var ms = new MemoryStream(Encoding.UTF8.GetBytes(metaData));
+			var serializer = new DataContractJsonSerializer(typeof(ChunkMetaData));
+			ChunkMetaData somemetaData = serializer.ReadObject(ms) as ChunkMetaData;
+			string path = String.Empty;
+			// The Name of the Upload component is "files"
+			if (files != null)
+			{
+				foreach (var file in files)
+				{
+					//path = Path.Combine(Server.MapPath("~/App_Data"), somemetaData.FileName);
+
+					//AppendToFile(path, file.InputStream);
+				}
+			}
+
+			var fileBlob = new Models.FileResult();
+			fileBlob.uploaded = somemetaData.TotalChunks - 1 <= somemetaData.ChunkIndex;
+			fileBlob.fileUid = somemetaData.UploadUid;
+
+			return Json(fileBlob);
+		}
+
+		public ActionResult Remove(string[] fileNames)
+		{
+			// The parameter of the Remove action must be called "fileNames"
+
+			if (fileNames != null)
+			{
+				foreach (var fullName in fileNames)
+				{
+					var fileName = Path.GetFileName(fullName);
+					var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+
+					// TODO: Verify user permissions
+
+					if (System.IO.File.Exists(physicalPath))
+					{
+						// The files are not actually removed in this demo
+						// System.IO.File.Delete(physicalPath);
+					}
+				}
+			}
+
+			// Return an empty string to signify success
+			return Content("");
+		}
+
+		#endregion
+
 		#region PAGES
 
 		public ActionResult Index()
@@ -128,10 +234,11 @@ namespace DebtTracker.Controllers
 
 		#endregion
 
-
 		#region CRUD
 
 		#region Debts
+
+
 
 		public int InsertNewDebt(Debt newDebt)
 		{

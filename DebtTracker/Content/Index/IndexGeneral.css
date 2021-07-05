@@ -1,5 +1,9 @@
 ﻿@media screen {
 
+    .row .col {
+        margin-bottom: 10px;
+    }
+
 	.card {
 		overflow: visible;
 	}
@@ -71,5 +75,64 @@
     #newTemplate span {
         line-height: 40px;
     }
+
+    .dropZoneElement {
+        position: relative;
+        display: inline-block;
+        background-color: #f8f8f8;
+        border: 1px solid #c7c7c7;
+        width: 350px;
+        height: 200px;
+        text-align: center;
+    }
+
+    .textWrapper {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        font-size: 18px;
+        line-height: 1.2em;
+        font-family: Arial,Helvetica,sans-serif;
+        color: #000;
+    }
+
+    .dropImageHereText {
+        color: #c7c7c7;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    .wrapper:after {
+        content: ".";
+        display: inline-block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .k-upload {
+        background-color: #455a64 !important;
+        border: none !important;
+        border-color: #455a64 !important;
+    }
+
+    .k-dropzone {
+        padding: 0 !important;
+    }
+
+    .k-dropzone > .k-button.k-upload-button {
+        float: right;
+    }
+
+    .k-upload-files {
+        display: none;
+    }
+
+
+    em {
+        display: none;
+    }
+
 }
 

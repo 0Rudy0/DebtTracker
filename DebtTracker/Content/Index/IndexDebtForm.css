@@ -318,7 +318,8 @@
 		width: 100% !important;
 	}
 
-	.btn-selectTemplate {
+	.btn-selectTemplate,
+	.btn-upload {
 		width: 100%;
 	}
 

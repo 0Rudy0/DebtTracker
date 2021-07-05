@@ -18,18 +18,48 @@
 }
 
 else
-{   
+{
     <div class="row" id="mainDebtForm">
         <div class="col s12 m12">
             <div class="card blue-grey darken-2">
                 <div class="k-loading-image"></div>
                 <div class="card-content white-text">
                     <div class="row">
-                        <a class='modal-trigger btn waves-effect  blue-grey darken-1 waves-light btn btn-large btn-selectTemplate'
-                           href='#templateModal'>
-                            <i class="material-icons left">list</i>
-                            Predložak
-                        </a>
+                        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <a class='modal-trigger btn waves-effect  blue-grey darken-1 waves-light btn btn-large btn-selectTemplate'
+                               href='#templateModal'>
+                                <i class="material-icons left">list</i>
+                                Predložak
+                            </a>
+                        </div>
+                        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4" style="float: right;">
+                            @*<a class='modal-trigger btn waves-effect  blue-grey darken-1 waves-light btn btn-large btn-upload'
+                                   href='#templateModal'>
+                                    <i class="material-icons left">cloud_upload</i>
+                                    Priloži datoteku
+                                </a>*@
+                            <div>
+                                <input name="files" id="files" type="file" aria-label="files" />
+                            </div>
+                            @*<div style="float:right">
+                                <div class="dropZoneElement">
+                                    <div class="textWrapper">
+                                        <p>Drag &amp; Drop Files Here</p>
+                                        <p class="dropImageHereText">Drop file here to upload</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        </div>
+                        @*<div class="box">
+                            <div class="box-col">
+                                <h4>Select allowed files types for upload</h4>
+                                <div id="fileTypes"></div>
+                            </div>
+                            <div class="box-col">
+                                <input type="checkbox" id="limitUploadSize" class="k-checkbox">
+                                <label class="k-checkbox-label" for="limitUploadSize">Limit File Size to 4MB</label>
+                            </div>
+                        </div>*@
                     </div>
 
                     <div class="row mainCard">
@@ -154,7 +184,7 @@ else
 
     <div id="templateModal" class="modal bottom-sheet blue-grey darken-1">
         <div class="modal-content  blue-grey darken-1">
-            <div class='collection'>               
+            <div class='collection'>
                 <a href="#!" id="newTemplate" class="newTemplateText collection-item  blue-grey darken-3">
                     <i class="material-icons left">add</i><span>Dodaj kao novi</span>
                 </a>

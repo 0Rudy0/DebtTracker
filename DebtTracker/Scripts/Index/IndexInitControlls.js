@@ -62,6 +62,88 @@ function initDatePickers() {
 			//console.log(value); //value is the selected date in the calendar				
 		}
 	});
+
+	//$("#fileTypes").kendoMultiSelect({
+	//	dataTextField: "text",
+	//	dataValueField: "value",
+	//	dataSource: [
+	//		{ text: "txt", value: "txt" },
+	//		{ text: "csv", value: "csv" }
+	//	],
+	//	value: ["txt", "csv"],
+	//	change: onChange,
+	//});
+	initUpload();
+}
+
+function onChange() {
+	var upload = $("#files").getKendoUpload();
+	upload.destroy();
+
+	initUpload();
+}
+
+function initUpload() {
+	var validation = {};
+	var filetypes = ['txt', 'csv'];
+
+	validation.maxFileSize = 4194304;
+	validation.allowedExtensions = filetypes;
+
+	$("#files").kendoUpload({
+		async: {
+			chunkSize: 11000,// bytes
+			saveUrl: appName + "/Home/UploadCSV",
+			removeUrl: "Remove",
+			autoUpload: true
+		},
+		localization: {
+			select: '<i class="material-icons left">cloud_upload</i>Priloži CSV'
+		},
+		validation: validation,
+		success: onSuccess,
+		error: onError,
+		select: onSelect,
+		dropZone: ".dropZoneElement"
+	}).data("kendoUpload");
+
+	$('.k-dropzone > .k-button.k-upload-button').addClass('modal-trigger btn waves-effect  blue-grey darken-1 waves-light btn btn-large btn-upload')
+}
+
+function onSelect() {
+	$('#mainDebtForm .k-loading-image').css('display', 'block');
+}
+
+function onSuccess(e, a, b) {
+	// An array with information about the uploaded files
+	var files = e.files;
+	$('#mainDebtForm .k-loading-image').css('display', 'none');
+
+
+	if (e.response.errorMessages.length > 0) {
+		for (var i = 0; i < e.response.errorMessages.length; i++) {
+			Materialize.toast(e.response.errorMessages[i], 3000);
+        }
+	}
+	if (e.response.countSuccess > 0) {
+		Materialize.toast("Uspješno uneseno " + e.response.countSuccess + " troškova." , 10000);
+	}
+	getUnpaidDebts();
+	resetMainForm();
+	//debugger;
+	//if (e.operation == "upload") {
+	//	alert("Successfully uploaded " + files.length + " files");
+	//}
+}
+
+function onError(e) {
+	// An array with information about the uploaded files
+	var files = e.files;
+
+	if (e.operation == "upload") {
+		Materialize.toast("Došlo je do greške prilikom obrade datoteke", 10000);
+		//alert("Failed to upload " + files.length + " files");
+	}
 }
 
 function initClickFunctions() {
