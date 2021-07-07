@@ -90,7 +90,7 @@ namespace DebtTracker.Controllers
 				{
 					foreach (var file in files)
 					{
-						var streamReader = new StreamReader(file.InputStream, System.Text.Encoding.Default);
+						var streamReader = new StreamReader(file.InputStream, System.Text.Encoding.UTF8);
 						var stream = streamReader.ReadToEnd();
 						var content = HttpUtility.UrlDecode(stream);
 						var result = Utils.ProcessCSV(content, debtTypes, Session["forUser"]?.ToString(), User.Identity.GetUserId());
